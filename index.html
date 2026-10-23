@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bloom & Petal Studio creates thoughtful floral arrangements for beautiful moments.">
+    <title>Bloom &amp; Petal Studio</title>
+
+    <!-- Required Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+
+        /* Design system: cream, sage, and red */
+        @theme {
+            --color-cream: #F8F5EF;
+            --color-sage: #71836B;
+            --color-rose: #FF0000;
+            --color-ink: #292D27;
+            --color-night: #171C19;
+            --color-darkcard: #252D28;
+            --color-darktext: #F8F5EF;
+        }
+
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                @apply bg-cream text-ink dark:bg-night dark:text-darktext;
+            }
+
+            section {
+                scroll-margin-top: 90px;
+            }
+
+            label {
+                @apply mb-2 block text-sm font-semibold;
+            }
+
+            input,
+            textarea {
+                @apply w-full rounded-xl border border-sage/50 bg-white px-4 py-3 text-ink outline-none focus:border-rose focus:ring-2 focus:ring-rose/30 dark:border-sage/60 dark:bg-darkcard dark:text-darktext;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                @apply text-gray-600 dark:text-gray-300;
+            }
+        }
+
+        @layer components {
+            /* Reusable component classes */
+            .section-title {
+                @apply mb-4 text-3xl font-bold tracking-tight md:text-4xl;
+            }
+
+            .section-description {
+                @apply mx-auto max-w-2xl text-base leading-7 text-ink/80 dark:text-darktext/80 md:text-lg;
+            }
+
+            .btn-primary {
+                @apply inline-flex items-center justify-center rounded-full bg-rose px-6 py-3 font-semibold text-white hover:bg-[#CC0000] focus:outline-none focus:ring-2 focus:ring-rose focus:ring-offset-2 dark:focus:ring-offset-night;
+            }
+
+            .btn-secondary {
+                @apply inline-flex items-center justify-center rounded-full border border-sage px-5 py-3 font-semibold text-ink hover:bg-sage/15 focus:outline-none focus:ring-2 focus:ring-sage dark:border-sage dark:text-darktext dark:hover:bg-sage/20 dark:focus:ring-offset-night;
+            }
+
+            .color-card {
+                @apply rounded-2xl border border-sage/30 bg-white p-6 shadow-sm dark:border-sage/40 dark:bg-darkcard;
+            }
+
+            .nav-link {
+                @apply rounded-lg px-3 py-2 text-sm font-medium text-ink hover:bg-sage/15 focus:outline-none focus:ring-2 focus:ring-rose dark:text-darktext dark:hover:bg-sage/20;
+            }
+        }
+
+        /* Reading progress indicator */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 0%;
+            height: 4px;
+            background-color: var(--color-rose);
+            pointer-events: none;
+        }
+
+        /*
+          GSAP animates opacity, position, scale, and rotation.
+          Do not add Tailwind translate-*, scale-*, rotate-*,
+          or transition-all classes to those animated elements.
+        */
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen antialiased">
+
+    <!-- Scroll progress bar -->
+    <div id="progressBar" aria-hidden="true"></div>
+
+    <!-- Header and navigation -->
+    <header class="sticky top-0 z-50 border-b border-sage/30 bg-cream/95 backdrop-blur dark:border-sage/40 dark:bg-night/95">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-4 md:px-8"
+             aria-label="Main navigation">
+
+            <a href="#hero"
+               class="rounded-lg text-base font-bold tracking-tight text-rose focus:outline-none focus:ring-2 focus:ring-rose md:text-xl">
+                Bloom &amp; Petal Studio
+            </a>
+
+            <div class="hidden items-center gap-2 md:flex">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#work" class="nav-link">Our Flowers</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <button id="darkModeToggle"
+                    type="button"
+                    class="btn-secondary px-3 py-2 text-sm"
+                    aria-label="Toggle dark mode"
+                    aria-pressed="true">
+                <span id="themeIcon" aria-hidden="true">☀</span>
+                <span id="themeLabel">Light Mode</span>
+            </button>
+        </nav>
+
+        <!-- Mobile navigation -->
+        <nav class="flex justify-center gap-2 px-3 pb-3 md:hidden"
+             aria-label="Mobile navigation">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#work" class="nav-link">Flowers</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 1. Hero -->
+        <section id="hero"
+                 class="overflow-hidden bg-cream px-5 py-16 dark:bg-night md:px-8 md:py-24">
+            <div class="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
+
+                <div class="hero-copy">
+                    <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-rose">
+                        Flowers made with love
+                    </p>
+
+                    <h1 class="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                        Every flower tells a
+                        <span class="text-rose">beautiful story.</span>
+                    </h1>
+
+                    <p class="mb-8 max-w-xl text-lg leading-8 text-ink/80 dark:text-darktext/80">
+                        We create thoughtful floral arrangements that make ordinary
+                        moments feel special. Share your feelings through the beauty
+                        of flowers.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#work" class="btn-primary">Explore Our Flowers</a>
+                        <a href="#contact" class="btn-secondary">Contact Us</a>
+                    </div>
+
+                    <button id="replayBtn"
+                            type="button"
+                            class="mt-6 rounded-lg text-sm font-semibold text-rose underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-rose">
+                        Replay Hero Animation
+                    </button>
+                </div>
+
+                <div class="hero-art mx-auto w-full max-w-md">
+                    <div class="rounded-[2rem] border border-sage/30 bg-white p-4 shadow-xl dark:border-sage/40 dark:bg-darkcard md:p-6">
+                        <div class="flex min-h-80 flex-col items-center justify-center rounded-[1.5rem] bg-[#E8EBDD] px-6 py-10 text-center dark:bg-[#303B32]">
+                            <div class="flower-emoji mb-5 text-8xl" role="img" aria-label="Flower bouquet">💐</div>
+
+                            <p class="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-[#40533D] dark:text-[#E4EBDD]">
+                                Made with care
+                            </p>
+
+                            <h2 class="text-2xl font-bold text-ink dark:text-darktext">
+                                A Little Bloom of Happiness
+                            </h2>
+
+                            <p class="mt-3 max-w-xs leading-6 text-[#40533D] dark:text-[#E4EBDD]">
+                                Fresh flowers, thoughtful details, and beautiful memories.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. About -->
+        <section id="about"
+                 class="reveal border-y border-sage/30 bg-white px-5 py-20 dark:border-sage/40 dark:bg-darkcard md:px-8 md:py-24">
+            <div class="mx-auto max-w-4xl text-center">
+                <p class="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-rose">
+                    Get to know us
+                </p>
+
+                <h2 class="section-title">Flowers with Meaning</h2>
+
+                <p class="section-description">
+                    Bloom &amp; Petal Studio believes flowers can express emotions
+                    words cannot always describe. From birthdays and anniversaries
+                    to everyday surprises, each arrangement is prepared with
+                    creativity, care, and attention to detail.
+                </p>
+
+                <div class="mt-10 grid gap-5 text-left md:grid-cols-3">
+                    <article class="color-card">
+                        <div class="mb-3 text-3xl" aria-hidden="true">🌷</div>
+                        <h3 class="mb-2 text-lg font-bold">Thoughtful Designs</h3>
+                        <p class="leading-7 text-ink/80 dark:text-darktext/80">
+                            Arrangements designed to match your message and occasion.
+                        </p>
+                    </article>
+
+                    <article class="color-card">
+                        <div class="mb-3 text-3xl" aria-hidden="true">🌿</div>
+                        <h3 class="mb-2 text-lg font-bold">Natural Beauty</h3>
+                        <p class="leading-7 text-ink/80 dark:text-darktext/80">
+                            Inspired by nature, soft colors, and simple elegance.
+                        </p>
+                    </article>
+
+                    <article class="color-card">
+                        <div class="mb-3 text-3xl" aria-hidden="true">🎁</div>
+                        <h3 class="mb-2 text-lg font-bold">Special Moments</h3>
+                        <p class="leading-7 text-ink/80 dark:text-darktext/80">
+                            Flowers for celebrations, gifts, and meaningful surprises.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Work / Features -->
+        <section id="work"
+                 class="reveal bg-cream px-5 py-20 dark:bg-night md:px-8 md:py-24">
+            <div class="mx-auto max-w-7xl">
+
+                <div class="mb-12 text-center">
+                    <p class="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-rose">
+                        Our collection
+                    </p>
+
+                    <h2 class="section-title">Flowers for Every Occasion</h2>
+
+                    <p class="section-description">
+                        Find an arrangement that helps you celebrate, appreciate,
+                        and make someone feel loved.
+                    </p>
+                </div>
+
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+                    <article class="color-card">
+                        <div class="mb-5 flex min-h-48 items-center justify-center rounded-xl bg-[#F2E1E4] dark:bg-[#453039]">
+                            <span class="text-7xl" role="img" aria-label="Rose bouquet">🌹</span>
+                        </div>
+
+                        <p class="mb-2 text-sm font-bold uppercase tracking-wider text-rose">
+                            Project One
+                        </p>
+
+                        <h3 class="mb-3 text-xl font-bold">Romantic Rose Bouquet</h3>
+
+                        <p class="mb-5 leading-7 text-ink/80 dark:text-darktext/80">
+                            A classic arrangement for anniversaries, romantic gestures,
+                            and heartfelt celebrations.
+                        </p>
+
+                        <a href="#contact" class="rounded underline text-rose underline-offset-4 focus:outline-none focus:ring-2 focus:ring-rose">
+                            Ask about this bouquet
+                        </a>
+                    </article>
+
+                    <article class="color-card">
+                        <div class="mb-5 flex min-h-48 items-center justify-center rounded-xl bg-[#E8EBDD] dark:bg-[#303B32]">
+                            <span class="text-7xl" role="img" aria-label="Mixed flower bouquet">💐</span>
+                        </div>
+
+                        <p class="mb-2 text-sm font-bold uppercase tracking-wider text-rose">
+                            Project Two
+                        </p>
+
+                        <h3 class="mb-3 text-xl font-bold">Garden Mix Bouquet</h3>
+
+                        <p class="mb-5 leading-7 text-ink/80 dark:text-darktext/80">
+                            A cheerful mix of floral colors for birthdays, friendship,
+                            and everyday happiness.
+                        </p>
+
+                        <a href="#contact" class="rounded text-rose underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-rose">
+                            Ask about this bouquet
+                        </a>
+                    </article>
+
+                    <article class="color-card">
+                        <div class="mb-5 flex min-h-48 items-center justify-center rounded-xl bg-[#F4E8D8] dark:bg-[#41382D]">
+                            <span class="text-7xl" role="img" aria-label="Sunflower bouquet">🌻</span>
+                        </div>
+
+                        <p class="mb-2 text-sm font-bold uppercase tracking-wider text-rose">
+                            Project Three
+                        </p>
+
+                        <h3 class="mb-3 text-xl font-bold">Sunshine Bouquet</h3>
+
+                        <p class="mb-5 leading-7 text-ink/80 dark:text-darktext/80">
+                            A bright and warm arrangement to share encouragement,
+                            gratitude, and positive energy.
+                        </p>
+
+                        <a href="#contact" class="rounded text-rose underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-rose">
+                            Ask about this bouquet
+                        </a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Contact -->
+        <section id="contact"
+                 class="reveal border-t border-sage/30 bg-white px-5 py-20 dark:border-sage/40 dark:bg-darkcard md:px-8 md:py-24">
+            <div class="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
+
+                <div>
+                    <p class="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-rose">
+                        Let's talk
+                    </p>
+
+                    <h2 class="section-title">Let's Make Something Beautiful</h2>
+
+                    <p class="mb-6 max-w-lg leading-8 text-ink/80 dark:text-darktext/80">
+                        Have a special occasion in mind? Tell us what kind of
+                        flowers you are looking for.
+                    </p>
+
+                    <div class="color-card">
+                        <p class="mb-2 font-bold">Bloom &amp; Petal Studio</p>
+
+                        <p class="leading-7 text-ink/80 dark:text-darktext/80">
+                            Thoughtful floral arrangements for life's beautiful moments.
+                        </p>
+
+                        <p class="mt-4 font-semibold text-rose">
+                            Open to creative ideas.
+                        </p>
+                    </div>
+                </div>
+
+                <form id="contactForm" class="space-y-5" action="#" method="post">
+                    <div>
+                        <label for="name">Your Name</label>
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               autocomplete="name"
+                               placeholder="Enter your name"
+                               required>
+                    </div>
+
+                    <div>
+                        <label for="email">Email Address</label>
+                        <input id="email"
+                               name="email"
+                               type="email"
+                               autocomplete="email"
+                               placeholder="Enter your email"
+                               required>
+                    </div>
+
+                    <div>
+                        <label for="message">Your Message</label>
+                        <textarea id="message"
+                                  name="message"
+                                  rows="5"
+                                  placeholder="Tell us about your flower arrangement"
+                                  required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full">
+                        Send Message
+                    </button>
+
+                    <p id="formStatus"
+                       class="text-sm font-semibold text-rose"
+                       role="status"
+                       aria-live="polite"></p>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-sage/30 bg-cream px-5 py-8 dark:border-sage/40 dark:bg-night md:px-8">
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center md:flex-row md:text-left">
+            <p class="font-bold text-rose">Bloom &amp; Petal Studio</p>
+
+            <p class="text-sm text-ink/80 dark:text-darktext/80">
+                &copy; <span id="currentYear"></span> Bloom &amp; Petal Studio. All rights reserved.
+            </p>
+
+            <a href="#hero" class="rounded text-sm font-semibold text-rose underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-rose">
+                Back to top ↑
+            </a>
+        </div>
+    </footer>
+
+    <!-- Required libraries: GSAP, then ScrollTrigger, then your script -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
