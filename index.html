@@ -28,20 +28,14 @@ tailwind.config = {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <style>
-/* 60-30-10 COLOR RULE */
 
-/* 60% Dominant Color */
+/* ========================================
+   COLOR PALETTE - 60/30/10
+======================================== */
+
 :root {
   --base: #ECE3D6;
-}
-
-/* 30% Secondary Color */
-:root {
   --panel: #DDCFBA;
-}
-
-/* 10% Accent Color */
-:root {
   --accent: #B5560A;
   --onacc: #FFFFFF;
   --ink: #3E2714;
@@ -50,7 +44,8 @@ tailwind.config = {
   --sh-d: #BFAF99;
 }
 
-/* Dark Mode */
+/* DARK MODE */
+
 html.dark {
   --base: #221A15;
   --panel: #2E241D;
@@ -60,6 +55,18 @@ html.dark {
   --soft: #C9B49B;
   --sh-l: #3A2E25;
   --sh-d: #150F0C;
+}
+
+/* ========================================
+   GLOBAL STYLES
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -72,20 +79,67 @@ h1, h2 {
   font-family: Georgia, 'Times New Roman', serif;
 }
 
-/* Neumorphism */
+/* ========================================
+   NEUMORPHISM
+======================================== */
+
 .neu {
   background: var(--panel);
   border-radius: 24px;
-  box-shadow: 8px 8px 16px var(--sh-d),
-             -8px -8px 16px var(--sh-l);
+  box-shadow:
+    8px 8px 16px var(--sh-d),
+    -8px -8px 16px var(--sh-l);
 }
 
 .neu-in {
   background: var(--panel);
   border-radius: 16px;
-  box-shadow: inset 5px 5px 10px var(--sh-d),
-              inset -5px -5px 10px var(--sh-l);
+  box-shadow:
+    inset 5px 5px 10px var(--sh-d),
+    inset -5px -5px 10px var(--sh-l);
 }
+
+/* ========================================
+   GLASSMORPHISM
+======================================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(62, 39, 20, 0.12);
+}
+
+.product-glass {
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(62, 39, 20, 0.12);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.product-glass:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(62, 39, 20, 0.2);
+}
+
+/* GLASS NAVIGATION */
+
+header {
+  background: rgba(221, 207, 186, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ========================================
+   BUTTONS
+======================================== */
 
 .btn {
   background: var(--panel);
@@ -95,19 +149,37 @@ h1, h2 {
   padding: .75rem 1.5rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 6px 6px 12px var(--sh-d),
-             -6px -6px 12px var(--sh-l);
+  box-shadow:
+    6px 6px 12px var(--sh-d),
+    -6px -6px 12px var(--sh-l);
+  transition: .3s ease;
 }
 
 .btn:active {
-  box-shadow: inset 4px 4px 8px var(--sh-d),
-              inset -4px -4px 8px var(--sh-l);
+  box-shadow:
+    inset 4px 4px 8px var(--sh-d),
+    inset -4px -4px 8px var(--sh-l);
 }
 
 .btn-acc {
   background: var(--accent);
   color: var(--onacc);
 }
+
+.glass-btn {
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 999px;
+  padding: 12px 24px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ========================================
+   FORM FIELDS
+======================================== */
 
 .field {
   width: 100%;
@@ -124,29 +196,74 @@ button:focus-visible,
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
+
+/* ========================================
+   DARK MODE GLASS
+======================================== */
+
+html.dark header {
+  background: rgba(46, 36, 29, 0.85);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+html.dark .glass,
+html.dark .product-glass {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
+
+html.dark .glass-btn {
+  background: rgba(255,255,255,.08);
+  color: var(--ink);
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+
+  .product-glass:hover {
+    transform: none;
+  }
+}
+
 </style>
 </head>
 
 <body class="antialiased">
 
+<!-- SCROLL PROGRESS -->
 <div id="progressBar"
  class="fixed top-0 left-0 right-0 h-1 bg-accent z-50"
  style="transform:scaleX(0);transform-origin:left">
 </div>
 
 <!-- HEADER -->
-<header class="sticky top-0 z-40 bg-panel">
+<header class="sticky top-0 z-40">
 <nav class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2 px-4 py-3">
 
 <a href="#top" class="font-bold text-lg">
 🎂 Carlos Cake
 </a>
+
 <ul>
 <li><a href="#featured-cakes">Carlos Cake</a></li>
 </ul>
 
 <button id="darkModeToggle"
- class="btn !py-2 order-2 sm:order-3"
+ class="btn !py-2"
  type="button"
  aria-pressed="false">
 Toggle Dark Mode
@@ -171,6 +288,7 @@ celebrations, and every special moment.
 </p>
 
 <div class="flex flex-wrap gap-4 mt-8">
+
 <a href="#contact" class="intro-btn btn btn-acc">
 Get in touch
 </a>
@@ -178,10 +296,11 @@ Get in touch
 <button id="replayBtn" class="intro-btn btn" type="button">
 Replay Intro
 </button>
+
 </div>
 </div>
 
-<div class="hero-art neu aspect-square max-w-xs md:max-w-sm w-full mx-auto p-3">
+<div class="hero-art glass aspect-square max-w-xs md:max-w-sm w-full mx-auto p-3">
 <img
 src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1000&auto=format&fit=crop"
 alt="Decorated celebration cake"
@@ -191,60 +310,56 @@ class="w-full h-full object-cover rounded-2xl">
 
 </section>
 
-
-<!-- FEATURED GOURMET CAKES SECTION -->
+<!-- FEATURED CAKES -->
 <section id="featured-cakes" class="reveal py-14">
 
-  <div class="text-center mb-8">
-    <p class="text-accent font-bold tracking-widest text-sm uppercase">
-      Only at Carlos Café
-    </p>
+<div class="text-center mb-8">
 
-    <h2 class="text-3xl md:text-4xl font-bold mt-2">
-      Indulgent <span class="text-accent">Gourmet Cakes</span>
-    </h2>
+<p class="text-accent font-bold tracking-widest text-sm uppercase">
+Only at Carlos Café
+</p>
 
-    <p class="text-soft mt-3">
-      Discover our delicious selection of specialty cakes.
-    </p>
-  </div>
+<h2 class="text-3xl md:text-4xl font-bold mt-2">
+Indulgent <span class="text-accent">Gourmet Cakes</span>
+</h2>
 
-  <div class="neu p-3 md:p-5 max-w-4xl mx-auto">
+<p class="text-soft mt-3">
+Discover our delicious selection of specialty cakes.
+</p>
 
-    <img
-      src="carlos-gourmet-cakes.jpg"
-      alt="Carlos Café Indulgent Gourmet Cakes collection"
-      class="w-full h-auto rounded-2xl object-contain"
-      loading="lazy"
-    >
+</div>
 
-    <div class="text-center mt-5">
-      <h3 class="text-xl font-bold">
-        Something Sweet for Every Occasion
-      </h3>
+<div class="glass p-3 md:p-5 max-w-4xl mx-auto">
 
-      <p class="text-soft text-sm mt-2">
-        S'mores, Parmesan, Tres Leches, Cookies & Cream,
-        and Burnt Cheesecake.
-      </p>
+<img
+src="carlos-gourmet-cakes.jpg"
+alt="Carlos Café Indulgent Gourmet Cakes collection"
+class="w-full h-auto rounded-2xl object-contain"
+loading="lazy">
 
-      <a href="#contact"
-         class="btn btn-acc inline-block mt-5">
-        Order Your Favorite Cake
-      </a>
-    </div>
+<div class="text-center mt-5">
 
-  </div>
+<h3 class="text-xl font-bold">
+Something Sweet for Every Occasion
+</h3>
 
-</section>
-<!-- END FEATURED GOURMET CAKES -->
+<p class="text-soft text-sm mt-2">
+Chocolate cake, vanilla, Cookies & Cream, and ube.
+</p>
+
+<a href="#contact" class="btn btn-acc inline-block mt-5">
+Order Your Favorite Cake
+</a>
+
+</div>
+</div>
 
 </section>
 
 <!-- ABOUT SECTION -->
 <section id="about" class="reveal py-14 grid gap-10 md:grid-cols-2 items-center">
 
-<div class="neu-in p-3 overflow-hidden">
+<div class="glass p-3 overflow-hidden">
 <img
 src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1000&auto=format&fit=crop"
 alt="Freshly decorated strawberry cake"
@@ -275,7 +390,7 @@ Our <span class="text-accent">Services</span>
 
 <div class="grid gap-6 sm:grid-cols-2 max-w-3xl text-center">
 
-<div class="neu p-8">
+<div class="glass p-8">
 <div class="text-6xl mb-3" aria-hidden="true">🏪</div>
 <h3 class="font-bold text-lg">Store</h3>
 <p class="text-soft text-sm mt-1">
@@ -283,7 +398,7 @@ Visit us and choose from our freshly baked cakes and sweet treats.
 </p>
 </div>
 
-<div class="neu p-8">
+<div class="glass p-8">
 <div class="text-6xl mb-3" aria-hidden="true">🎁</div>
 <h3 class="font-bold text-lg">Pasalubong</h3>
 <p class="text-soft text-sm mt-1">
@@ -304,7 +419,7 @@ Our <span class="text-accent">Work</span>
 
 <div class="grid gap-6 md:grid-cols-3 text-center">
 
-<div class="neu-in p-8">
+<div class="glass p-8">
 <div class="text-6xl" aria-hidden="true">👩‍🍳</div>
 <h3 class="font-bold mt-3">Freshly Baked Cakes</h3>
 <p class="text-soft text-sm">
@@ -312,7 +427,7 @@ Our cakes are baked fresh for every special occasion.
 </p>
 </div>
 
-<div class="neu-in p-8">
+<div class="glass p-8">
 <div class="text-6xl" aria-hidden="true">🎁</div>
 <h3 class="font-bold mt-3">Custom Cake Orders</h3>
 <p class="text-soft text-sm">
@@ -320,7 +435,7 @@ Personalized cakes made to match your celebration.
 </p>
 </div>
 
-<div class="neu-in p-8">
+<div class="glass p-8">
 <div class="text-6xl" aria-hidden="true">🏪</div>
 <h3 class="font-bold mt-3">Beautiful Cake Designs</h3>
 <p class="text-soft text-sm">
@@ -334,62 +449,86 @@ Creative and delicious cakes for every event.
 <!-- PRODUCTS SECTION -->
 <section id="products" class="reveal py-14">
 
-<h2 class="text-3xl font-bold mb-8">
+<div class="text-center mb-8">
+
+<p class="text-accent font-bold tracking-widest text-sm uppercase">
+Freshly Baked with Love
+</p>
+
+<h2 class="text-3xl md:text-4xl font-bold mb-3">
 Our <span class="text-accent">Products</span>
 </h2>
 
+<p class="text-soft">
+Choose your favorite cake for every special occasion.
+</p>
+
+</div>
+
 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 text-center">
 
-<!-- PRODUCT 1 -->
-<div class="neu p-6">
+<!-- COOKIES & CREAM -->
+<div class="product-glass">
+
 <div class="neu-in p-2 mb-4">
 <img
-src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=700&auto=format&fit=crop"
-alt="Classic chocolate cake"
+src="https://abajillianrecipes.com/wp-content/uploads/2023/08/Oreo-Ice-Cream-Cake-A-baJillian-Recipes-7.jpg"
+alt="Cookies and Cream Oreo Cake"
 loading="lazy"
 class="w-full aspect-square object-cover rounded-xl">
-</div>
-<h3 class="font-bold">Classic Chocolate Cake</h3>
-<p class="text-soft font-bold mt-1">₱450 / cake</p>
 </div>
 
-<!-- PRODUCT 2 -->
-<div class="neu p-6">
-<div class="neu-in p-2 mb-4">
-<img
-src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&auto=format&fit=crop"
-alt="Vanilla birthday cake"
-loading="lazy"
-class="w-full aspect-square object-cover rounded-xl">
-</div>
-<h3 class="font-bold">Vanilla Birthday Cake</h3>
-<p class="text-soft font-bold mt-1">₱500 / cake</p>
+<h3 class="font-bold">Cookies & Cream Cake</h3>
+<p class="text-soft font-bold mt-2">₱550 / cake</p>
+
 </div>
 
-<!-- PRODUCT 3 -->
-<div class="neu p-6">
+<!-- CHOCOLATE -->
+<div class="product-glass">
+
 <div class="neu-in p-2 mb-4">
 <img
-src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=700&auto=format&fit=crop"
-alt="Strawberry cake"
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTM1oJ3QXJCE3L_Ett9M0N17YV6s6u59i9J0vFq_PzeA&s=10"
+alt="Rich Chocolate Cake"
 loading="lazy"
 class="w-full aspect-square object-cover rounded-xl">
-</div>
-<h3 class="font-bold">Strawberry Cake</h3>
-<p class="text-soft font-bold mt-1">₱550 / cake</p>
 </div>
 
-<!-- PRODUCT 4 -->
-<div class="neu p-6">
+<h3 class="font-bold">Chocolate Cake</h3>
+<p class="text-soft font-bold mt-2">₱450 / cake</p>
+
+</div>
+
+<!-- VANILLA -->
+<div class="product-glass">
+
 <div class="neu-in p-2 mb-4">
 <img
-src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=700&auto=format&fit=crop"
-alt="Ube cake"
+src="https://thescranline.com/wp-content/uploads/2025/02/VANILLA-CAKE-25-S-01.jpg"
+alt="Vanilla Drip Cake"
 loading="lazy"
 class="w-full aspect-square object-cover rounded-xl">
 </div>
+
+<h3 class="font-bold">Vanilla Cake</h3>
+<p class="text-soft font-bold mt-2">₱500 / cake</p>
+
+</div>
+
+<!-- UBE -->
+<div class="product-glass">
+
+<div class="neu-in p-2 mb-4">
+<img
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN2TKdizndlUzYiN5X0ciklbomiXgUykFluDJYm-Mh3g&s=10"
+alt="Ube Purple Flower Cake"
+loading="lazy"
+class="w-full aspect-square object-cover rounded-xl">
+</div>
+
 <h3 class="font-bold">Ube Cake</h3>
-<p class="text-soft font-bold mt-1">₱500 / cake</p>
+<p class="text-soft font-bold mt-2">₱500 / cake</p>
+
 </div>
 
 </div>
@@ -398,9 +537,10 @@ class="w-full aspect-square object-cover rounded-xl">
 <!-- CONTACT SECTION -->
 <section id="contact" class="reveal py-14">
 
-<div class="neu p-6 md:p-12 grid gap-10 md:grid-cols-2">
+<div class="glass p-6 md:p-12 grid gap-10 md:grid-cols-2">
 
 <div>
+
 <h2 class="text-3xl font-bold mb-4">
 Get in <span class="text-accent">Touch</span>
 </h2>
@@ -410,6 +550,7 @@ Get in <span class="text-accent">Touch</span>
 <li>✉️ carloscake@gmail.com</li>
 <li>🕖 Daily, 8 AM to 6 PM</li>
 </ul>
+
 </div>
 
 <form id="contactForm" class="space-y-4">
@@ -452,5 +593,6 @@ Send Message
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
